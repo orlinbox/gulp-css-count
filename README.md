@@ -9,7 +9,7 @@ Count CSS selectors, nesting depth, declarations and rules in CSS files.
 
 This plugin requires Gulp.
 
-If you haven't used [gulp](http://gulpjs.com/) before, be sure to check out the [Getting Started](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) guide. Once you're familiar with Gulp, you may install this plugin with this command:
+If you haven't used [Gulp](http://gulpjs.com/) before, be sure to check out the [Getting Started](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) guide. Once you're familiar with Gulp, you may install the plugin with this command:
 
 ```shell
 npm install gulp-css-count --save-dev
@@ -63,4 +63,5 @@ gulp.task('csscount', function() {
 
 ## Credits
 
-* Original work from [@phamann](https://github.com/phamann)'s [gulp-css-metrics](https://github.com/phamann/gulp-css-metrics)
+* [@visionmedia](https://github.com/visionmedia) for the great [css-parse](https://github.com/visionmedia/css-parse) library.
+s

@@ -54,8 +54,8 @@ var gulp = require('gulp');
 var gulp_css_count = require('gulp-css-count');
 
 gulp.task('csscount', function() {
-	return gulp.src('./css/**/*.css')
-		.pipe(gulp_css_count());
+  return gulp.src('./css/**/*.css')
+    .pipe(gulp_css_count());
 });
 ```
 
@@ -64,4 +64,3 @@ gulp.task('csscount', function() {
 ## Credits
 
 * [@visionmedia](https://github.com/visionmedia) for the great [css-parse](https://github.com/visionmedia/css-parse) library.
-s

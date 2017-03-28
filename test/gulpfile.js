@@ -1,8 +1,9 @@
+//sudo npm install gulp gulp-css-count
+
 var gulp = require('gulp');
-var size = require('gulp-filesize');
+var gulp_css_count = require('gulp-css-count');
 
 gulp.task('default', function() {
-  gulp.src('./*.css')
-    .pipe(gulp.dest('./test/')
-    .pipe(size());
+  return gulp.src('./*.css')
+    .pipe(gulp_css_count());
 });

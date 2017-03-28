@@ -1,34 +1,102 @@
-var fs = require("fs");
+var fs = require('fs');
+var parse = require('css-parse');
 var map = require('map-stream');
 var gutil = require('gulp-util');
 var gzip_size = require('gzip-size');
 
-module.exports = function(){
+module.exports = function() {
   'use strict';
 
-  return map(function(file, callback){
+  return map(function(file, callback) {
 
-    // line1
-    var totalSelectors = '?';
-    var totalDeclarations = '?';
-    var totalRules = '?';
-    var selectorsPerRule = '?';
-    var declarationsPerRule = '?';
+    // functions
+
+    function traverse(o) {
+      for (var i in o) {
+        if (typeof o[i] === 'object') {
+          if (o[i].type === 'rule') {
+            countRules++;
+            countSelectors += o[i].selectors.length;
+            for (var j = 0; j < o[i].selectors.length; j++) {
+              selectorSplit(o[i].selectors[j] + ' ');
+            }
+            countDeclarations += o[i].declarations.length;
+            continue;
+          }
+          traverse(o[i]);
+        }
+      }
+    }
+
+    function selectorSplit(selector) {
+      var selectorString = selector.replace('>', ' ').replace('+', ' ').replace('~', ' ').replace(/\s\s+/g, ' ');
+      var selectorsDepth = selectorString.split(' ').length - 1;
+      if (typeof nestingArr[selectorsDepth] === 'undefined') {
+        nestingArr[selectorsDepth] = 1;
+      } else {
+        nestingArr[selectorsDepth]++;
+      }
+      countAsterisk += (selectorString.split('*').length - 1);
+    }
+
+    function createNestingTextAndDepth(nestingArr, countAsterisk, countSelectors) {
+      var nestingText = '';
+      nestingArr.forEach(function(val, ind) {
+        var nestingContent = ' D' + ind + ': ' + val + ' (' + Math.round((val/countSelectors)*100) + '%) ';
+        if (ind > 4) {
+          nestingText += gutil.colors.red(nestingContent);
+        } else {
+          nestingText += nestingContent;
+        }
+        nestingText += '|';
+      });
+      nestingText += '| ';
+      var asteriskContent = '* ' + countAsterisk;
+      if (countAsterisk > 9) {
+        nestingText += gutil.colors.red(asteriskContent);
+      } else {
+        nestingText += asteriskContent;
+      }
+      return nestingText;
+    }
+
+    // iniital vars
+
+    var nestingArr = [];
+    var countAsterisk = 0;
+    var countRules = 0;
+    var countSelectors = 0;
+    var countDeclarations = 0;
+    var fileContents;
+    var parsedData;
+
+    // action
+
+    if (file.isBuffer()) fileContents = new Buffer(file.contents).toString();
+    parsedData = parse(fileContents).stylesheet;
+    traverse(parsedData);
+
+    // vars after action
+
+    var selectorsPerRule = (countSelectors/countRules).toFixed(1);
+    var declarationsPerRule = (countDeclarations/countRules).toFixed(1);
     var stats = fs.statSync(file.path);
     var fileSize = stats.size;
-    var gzipSize = gzip_size.sync(file.contents);
+    var gzipSize = gzip_size.sync(fileContents);
 
-    var line1 = 'Selectors: ' + totalSelectors;
-    line1 += ' | Declr: ' + totalDeclarations;
-    line1 += ' | Rules: ' + totalRules;
+    // lines
+
+    var line1 = 'Selectors: ' + countSelectors;
+    line1 += ' | Declr: ' + countDeclarations;
+    line1 += ' | Rules: ' + countRules;
     line1 += ' | S/R: ' + selectorsPerRule;
     line1 += ' | D/R: ' + declarationsPerRule;
     line1 += ' || '+ gutil.colors.green(Math.ceil((fileSize/1000).toFixed()) +'k ('+ Math.ceil((gzipSize/1000).toFixed()) +'k gzip)');
 
-    // line2
-    var line2 = '---';
+    var line2 = '|' + createNestingTextAndDepth(nestingArr, countAsterisk, countSelectors);
 
     // output
+
     gutil.log('\n\n' + gutil.colors.cyan(file.path) + '\n' + line1 + '\n' + line2 + '\n');
 
     callback(null, file);

@@ -36,9 +36,8 @@
   },
   "dependencies": {
     "css-parse": "^2.0.0",
-    "glob": "^7.1.1",
-    "gzip-size": "^3.0.0",
+    "map-stream": "^0.0.7",
     "gulp-util": "^3.0.8",
-    "map-stream": "^0.0.7"
+    "gzip-size": "^3.0.0"
   }
 }

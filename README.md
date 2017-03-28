@@ -4,13 +4,12 @@ gulp-css-count
 Count CSS selectors, nesting depth, declarations and rules in CSS files.
 
 * To monitor simplicity of CSS files (depth/nesting of selectors and etc.)
-* To watch for 4096 selector limit in IE9.
 
 ## Getting Started
 
 This plugin requires Gulp.
 
-If you haven't used [gulp](http://gulpjs.com/) before, be sure to check out the [Getting Started](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) guide, as it explains how to create a gulpfile as well as install and use Gulp plugins. Once you're familiar with that process, you may install this plugin with this command:
+If you haven't used [gulp](http://gulpjs.com/) before, be sure to check out the [Getting Started](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) guide. Once you're familiar with Gulp, you may install this plugin with this command:
 
 ```shell
 npm install gulp-css-count --save-dev
@@ -46,36 +45,19 @@ D3:
 
 ...
 
-## Examples
+## Example
 
-Example of a gulp config (gulpfile.js) containing the csscount task.
+Gulp config (gulpfile.js) containing the csscount task.
 
 ```js
-Example here.
+var gulp = require('gulp');
+var gulp_css_count = require('gulp-css-count');
+
+gulp.task('csscount', function() {
+	return gulp.src('./css/**/*.css')
+		.pipe(gulp_css_count());
+});
 ```
-
-## Options
-
-##### maxSelectors
-
-Type: `Number`
-Default: `∞`
-
-Maximum number of selectors within CSS file. (IE9 limit is 4096)
-
-##### maxSelectorDepth
-
-Type: `Number`
-Default: `∞`
-
-Maximum depth (nesting) within selectors.
-
-##### beForgiving
-
-Type: `Boolean`
-Default: `false`
-
-Whether gulp to fail or not on 'maxSelectors' and 'maxSelectorDepth' errors.
 
 ***
 

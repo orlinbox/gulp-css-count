@@ -43,7 +43,7 @@ module.exports = function() {
       var nestingText = '';
       nestingArr.forEach(function(val, ind) {
         var nestingContent = ' D' + ind + ': ' + val + ' (' + Math.round((val/countSelectors)*100) + '%) ';
-        if (ind > 4) {
+        if (ind > 5) {
           nestingText += gutil.colors.red(nestingContent);
         } else {
           nestingText += nestingContent;

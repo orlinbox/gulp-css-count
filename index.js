@@ -1,4 +1,3 @@
-var fs = require('fs');
 var parse = require('css-parse');
 var map = require('map-stream');
 var gutil = require('gulp-util');
@@ -80,9 +79,8 @@ module.exports = function() {
 
     var selectorsPerRule = (countSelectors/countRules).toFixed(1);
     var declarationsPerRule = (countDeclarations/countRules).toFixed(1);
-    var stats = fs.statSync(file.path);
-    var fileSize = stats.size;
-    var gzipSize = gzip_size.sync(fileContents);
+    var fileSize = Math.ceil((fileContents.length/1000).toFixed());
+    var gzipSize = Math.ceil((gzip_size.sync(fileContents)/1000).toFixed());
 
     // lines
 
@@ -91,7 +89,7 @@ module.exports = function() {
     line1 += ' | Rules: ' + countRules;
     line1 += ' | S/R: ' + selectorsPerRule;
     line1 += ' | D/R: ' + declarationsPerRule;
-    line1 += ' || '+ gutil.colors.green(Math.ceil((fileSize/1000).toFixed()) +'k ('+ Math.ceil((gzipSize/1000).toFixed()) +'k gzip)');
+    line1 += ' || '+ gutil.colors.green(fileSize +'k ('+ gzipSize +'k gzip)');
 
     var line2 = '|' + createNestingTextAndDepth(nestingArr, countAsterisk, countSelectors);
 

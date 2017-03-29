@@ -1,6 +1,6 @@
 {
   "name": "gulp-css-count",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Count CSS selectors, declarations and rules in CSS files.",
   "keywords": [
     "gulp",

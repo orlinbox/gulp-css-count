@@ -13,7 +13,7 @@ npm install gulp-css-count --save-dev
 ## Sample Output
 
 ```
-test/style.css 32.05 kB
+/var/www/html/site/style.css 32.05 kB
 Selectors: 17 | Declr: 16 | Rules: 11 | S/R: 1.5 | D/R: 1.5
 D1: 7 (41%) | D2: 3 (18%) | D3: 4 (24%) | D4: 2 (12%) | * 4
 ```

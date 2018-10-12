@@ -1,7 +1,6 @@
 var parse = require('css-parse');
 var map = require('map-stream');
-var gutil = require('gulp-util');
-var gzip_size = require('gzip-size');
+var color = require('colors');
 
 module.exports = function() {
   'use strict';
@@ -41,18 +40,17 @@ module.exports = function() {
     function createNestingTextAndDepth(nestingArr, countAsterisk, countSelectors) {
       var nestingText = '';
       nestingArr.forEach(function(val, ind) {
-        var nestingContent = ' D' + ind + ': ' + val + ' (' + Math.round((val/countSelectors)*100) + '%) ';
+        var nestingContent = 'D' + ind + ': ' + val + ' (' + Math.round((val/countSelectors)*100) + '%)';
         if (ind > 5) {
-          nestingText += gutil.colors.red(nestingContent);
+          nestingText += color.yellow(nestingContent);
         } else {
           nestingText += nestingContent;
         }
-        nestingText += '|';
+        nestingText += ' | ';
       });
-      nestingText += '| ';
       var asteriskContent = '* ' + countAsterisk;
       if (countAsterisk > 9) {
-        nestingText += gutil.colors.red(asteriskContent);
+        nestingText += color.yellow(asteriskContent);
       } else {
         nestingText += asteriskContent;
       }
@@ -79,8 +77,7 @@ module.exports = function() {
 
     var selectorsPerRule = (countSelectors/countRules).toFixed(1);
     var declarationsPerRule = (countDeclarations/countRules).toFixed(1);
-    var fileSize = Math.ceil((fileContents.length/1000).toFixed());
-    var gzipSize = Math.ceil((gzip_size.sync(fileContents)/1000).toFixed());
+    var fileSize = (fileContents.length/1000).toFixed(2);
 
     // lines
 
@@ -89,13 +86,12 @@ module.exports = function() {
     line1 += ' | Rules: ' + countRules;
     line1 += ' | S/R: ' + selectorsPerRule;
     line1 += ' | D/R: ' + declarationsPerRule;
-    line1 += ' || '+ gutil.colors.green(fileSize +'k ('+ gzipSize +'k gzip)');
 
-    var line2 = '|' + createNestingTextAndDepth(nestingArr, countAsterisk, countSelectors);
+    var line2 = createNestingTextAndDepth(nestingArr, countAsterisk, countSelectors);
 
     // output
 
-    gutil.log('\n\n' + gutil.colors.cyan(file.path) + '\n' + line1 + '\n' + line2 + '\n');
+    console.log('\n' + color.cyan(file.path) + ' ' +  color.yellow(fileSize +' kB') + '\n' + color.dim(line1) + '\n' + line2);
 
     callback(null, file);
   });

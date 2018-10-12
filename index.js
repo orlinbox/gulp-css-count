@@ -42,7 +42,7 @@ module.exports = function() {
       nestingArr.forEach(function(val, ind) {
         var nestingContent = 'D' + ind + ': ' + val + ' (' + Math.round((val/countSelectors)*100) + '%)';
         if (ind > 5) {
-          nestingText += color.yellow(nestingContent);
+          nestingText += color.red(nestingContent);
         } else {
           nestingText += nestingContent;
         }
@@ -50,7 +50,7 @@ module.exports = function() {
       });
       var asteriskContent = '* ' + countAsterisk;
       if (countAsterisk > 9) {
-        nestingText += color.yellow(asteriskContent);
+        nestingText += color.red(asteriskContent);
       } else {
         nestingText += asteriskContent;
       }

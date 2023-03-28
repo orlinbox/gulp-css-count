@@ -1,6 +1,6 @@
 {
   "name": "gulp-css-count",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "license": "(MIT OR Apache-2.0)",
   "description": "Count CSS selectors, declarations and rules in CSS files.",
   "keywords": [
@@ -36,8 +36,8 @@
     "test": "gulp"
   },
   "dependencies": {
-    "css-parse": "^2.0.0",
-    "map-stream": "^0.0.7",
-    "colors": "^1.3.2"
+    "css-parse": "2.0.0",
+    "map-stream": "0.0.7",
+    "colors": "latest"
   }
 }

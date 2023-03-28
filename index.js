@@ -90,7 +90,7 @@ module.exports = function() {
 
     // output
 
-    console.log('\n' + '\x1b[36m' + file.path + '\x1b[0m' + ' ' + '\x1b[33m' + fileSize + '\x1b[0m' +' kB' + '\n' + '\x1b[30m' + line1 + '\x1b[0m' + '\n' + line2);
+    console.log('\n' + '\x1b[36m' + file.path + '\x1b[0m ' + '\x1b[33m' + fileSize + ' kB' + '\x1b[0m' + '\n' + '\x1b[90m' + line1 + '\x1b[0m' + '\n' + line2);
 
     callback(null, file);
   });

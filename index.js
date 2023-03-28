@@ -1,6 +1,5 @@
 var parse = require('css-parse');
 var map = require('map-stream');
-var color = require('colors');
 
 module.exports = function() {
   'use strict';
@@ -42,15 +41,15 @@ module.exports = function() {
       nestingArr.forEach(function(val, ind) {
         var nestingContent = 'D' + ind + ': ' + val + ' (' + Math.round((val/countSelectors)*100) + '%)';
         if (ind > 5) {
-          nestingText += color.red(nestingContent);
+          nestingText += '\x1b[31m' + nestingContent + '\x1b[0m';
         } else {
           nestingText += nestingContent;
         }
         nestingText += ' | ';
       });
       var asteriskContent = '* ' + countAsterisk;
-      if (countAsterisk > 9) {
-        nestingText += color.red(asteriskContent);
+      if (countAsterisk > 99) {
+        nestingText += '\x1b[31m' + asteriskContent + '\x1b[0m';
       } else {
         nestingText += asteriskContent;
       }
@@ -91,7 +90,7 @@ module.exports = function() {
 
     // output
 
-    console.log('\n' + color.cyan(file.path) + ' ' +  color.yellow(fileSize +' kB') + '\n' + color.dim(line1) + '\n' + line2);
+    console.log('\n' + '\x1b[36m' + file.path + '\x1b[0m' + ' ' + '\x1b[33m' + fileSize + '\x1b[0m' +' kB' + '\n' + '\x1b[30m' + line1 + '\x1b[0m' + '\n' + line2);
 
     callback(null, file);
   });

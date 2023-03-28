@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "css-parse": "2.0.0",
-    "map-stream": "0.0.7",
-    "colors": "latest"
+    "map-stream": "0.0.7"
   }
 }
